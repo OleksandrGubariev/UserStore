@@ -13,7 +13,11 @@ public class UserService {
     }
 
     public List<User> getAll() {
-        return jdbcUserDao.getGetAllUsers();
+        return jdbcUserDao.getAllUsers();
+    }
+
+    public void insertUser(User user){
+        jdbcUserDao.insertUser(user);
     }
 
 

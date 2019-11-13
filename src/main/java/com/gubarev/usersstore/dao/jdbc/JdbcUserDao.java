@@ -3,36 +3,55 @@ package com.gubarev.usersstore.dao.jdbc;
 import com.gubarev.usersstore.dao.jdbc.mapper.RowsMapper;
 import com.gubarev.usersstore.entity.User;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcUserDao {
     private static final String GET_ALL_USERS = "SELECT id, first_name, last_name, date_of_birth, salary FROM User;";
-   //private static final String INSERT_USER = "INSERT User (first_name, last_name, date_of_birth, salary) VALUES (?, ?, ?, ?);";
+    private static final String INSERT_USER = "INSERT User (first_name, last_name, date_of_birth, salary) VALUES (?, ?, ?, ?);";
 
-    public List<User> getGetAllUsers()  {
-        DbConnector dbConnector = new DbConnector();
-        Connection connection = dbConnector.createConnection();
+    public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        try(Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(GET_ALL_USERS)){
+        PreparedStatement preparedStatement = getStatement(GET_ALL_USERS);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
             RowsMapper rowsMapper = new RowsMapper();
             while (resultSet.next()) {
                 User user = rowsMapper.userRowMapper(resultSet);
                 users.add(user);
             }
-        }
-        catch (SQLException e){
-            try {
-                throw new SQLException("Database access error");
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return users;
+    }
+
+    public void insertUser(User user) {
+        try {
+            PreparedStatement preparedStatement = getStatement(INSERT_USER);
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            LocalDate dateOfBirth = user.getDateOfBirth();
+            Timestamp sqlDateOfBirth = Timestamp.valueOf(dateOfBirth.atStartOfDay());
+            preparedStatement.setTimestamp(3, sqlDateOfBirth);
+            preparedStatement.setDouble(4, user.getSalary());
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    PreparedStatement getStatement(String request) {
+        Connection connection = new DbConnector().createConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(request);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
     }
 }

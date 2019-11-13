@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 public class RowsMapperTest {
 
     @Test
-    public void testMapRow() throws SQLException {
+    public void testUserRowMapper() throws SQLException {
         RowsMapper rowsMapper = new RowsMapper();
 
         ResultSet mockResultSet = mock(ResultSet.class);

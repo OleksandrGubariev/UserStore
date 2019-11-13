@@ -28,27 +28,4 @@ public class GetAllUsersServlet extends HttpServlet {
     public void setUsersService(UserService usersService) {
         this.userService = usersService;
     }
-
-
-//    private void addUser(HttpServletRequest request,
-//                         HttpServletResponse response) throws ParseException {
-//        String firstName = request.getParameter("firstName");
-//        String lastName = request.getParameter("lastName");
-//
-//        java.util.Date dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dateOfBirth"));
-//        java.sql.Date sqlDateOfBirth = new java.sql.Date(dateOfBirth.getTime());
-//
-//        double salary = Double.parseDouble(request.getParameter("salary"));
-//
-//        try (Connection connection = new DbConnector().createConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)) {
-//            preparedStatement.setString(1, firstName);
-//            preparedStatement.setString(2, lastName);
-//            preparedStatement.setDate(3, sqlDateOfBirth);
-//            preparedStatement.setDouble(4, salary);
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
