@@ -1,30 +1,21 @@
 package com.gubarev.usersstore.entity;
 
-import javax.xml.crypto.Data;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class User {
-    private int id;
+    private long id;
     private String firstName;
     private String lastName;
     private double salary;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
 
-    public User(int id, String firstName, String lastName, double salary, Date dateOfBirth){
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.salary = salary;
-        this.dateOfBirth = dateOfBirth;
-    }
 
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -52,11 +43,11 @@ public class User {
         this.salary = salary;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }

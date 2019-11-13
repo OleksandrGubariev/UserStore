@@ -1,4 +1,4 @@
-package com.gubarev.usersstore.db;
+package com.gubarev.usersstore.dao.jdbc;
 
 import com.gubarev.usersstore.exception.ConnectDbException;
 

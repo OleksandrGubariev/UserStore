@@ -1,4 +1,4 @@
-package com.gubarev.usersstore.templater;
+package com.gubarev.usersstore.web.templater;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
