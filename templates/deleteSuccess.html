@@ -10,34 +10,8 @@
 
 <body>
     <div class="container">
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-		<tr>		
-			<th scope ="col">ID</th>
-			<th scope ="col">First Name</th>
-			<th scope ="col">Last Name</th>
-			<th scope ="col">Date of birth</th>
-			<th scope ="col">Salary</th>
-			<th scope ="col">Action</th>
-		</tr>
-            </thead>
-            <tbody>
-		<#list users as user>
-			<tr>		
-				<td>${user.id}</td>
-				<td>${user.firstName}</td>
-				<td>${user.lastName}</td>
-				<td>${user.dateOfBirth}</td>
-				<td>${user.salary}</td>
-				<td>				
-					<form action="delete?id=${user.id}" method="POST"> 
-						<button type="submit" class="btn btn-dark">DELETE</button>					</form>
-				</td>			
-			</tr>
-			  
-			</#list>
-		</tbody >
-        </table >
+        <p class = "text-center"> User delete successfully</p>
+        
     </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

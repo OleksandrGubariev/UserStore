@@ -2,6 +2,7 @@ package com.gubarev.usersstore;
 
 import com.gubarev.usersstore.dao.jdbc.JdbcUserDao;
 import com.gubarev.usersstore.service.UserService;
+import com.gubarev.usersstore.web.servlets.DeleteUserServlet;
 import com.gubarev.usersstore.web.servlets.GetAllUsersServlet;
 import com.gubarev.usersstore.web.servlets.InsertUserServlet;
 import org.eclipse.jetty.server.Server;
@@ -23,9 +24,13 @@ public class Starter {
         InsertUserServlet insertUserServlet  = new InsertUserServlet();
         insertUserServlet.setUsersService(userService);
 
+        DeleteUserServlet deleteUserServlet = new DeleteUserServlet();
+        deleteUserServlet.setUsersService(userService);
+
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(getAllUsersServlet), "/show");
         context.addServlet(new ServletHolder(insertUserServlet), "/add");
+        context.addServlet(new ServletHolder(deleteUserServlet), "/delete");
 
         //start server
         Server server = new Server(8080);

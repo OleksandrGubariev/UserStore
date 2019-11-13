@@ -11,6 +11,7 @@ import java.util.List;
 public class JdbcUserDao {
     private static final String GET_ALL_USERS = "SELECT id, first_name, last_name, date_of_birth, salary FROM User;";
     private static final String INSERT_USER = "INSERT User (first_name, last_name, date_of_birth, salary) VALUES (?, ?, ?, ?);";
+    private static final String DELETE_USER = "DELETE FROM User WHERE id=?";
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
@@ -28,8 +29,8 @@ public class JdbcUserDao {
     }
 
     public void insertUser(User user) {
+        PreparedStatement preparedStatement = getStatement(INSERT_USER);
         try {
-            PreparedStatement preparedStatement = getStatement(INSERT_USER);
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             LocalDate dateOfBirth = user.getDateOfBirth();
@@ -37,8 +38,18 @@ public class JdbcUserDao {
             preparedStatement.setTimestamp(3, sqlDateOfBirth);
             preparedStatement.setDouble(4, user.getSalary());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        catch (SQLException e){
+
+    }
+
+    public void deleteUser(long id) {
+        PreparedStatement preparedStatement = getStatement(DELETE_USER);
+        try {
+            preparedStatement.setDouble(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

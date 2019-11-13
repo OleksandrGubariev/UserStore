@@ -20,5 +20,8 @@ public class UserService {
         jdbcUserDao.insertUser(user);
     }
 
+    public void deleteUser(long id){
+        jdbcUserDao.deleteUser(id);
+    }
 
 }
