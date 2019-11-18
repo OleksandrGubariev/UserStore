@@ -24,4 +24,16 @@ public class UserService {
         jdbcUserDao.deleteUser(id);
     }
 
+    public User getUserById(long id){
+        return jdbcUserDao.getUserById(id);
+    }
+
+    public void editUser(User user){
+        jdbcUserDao.editUser(user);
+    }
+
+    public List<User> searchUsers(String word){
+        return jdbcUserDao.searchUser(word);
+    }
+
 }

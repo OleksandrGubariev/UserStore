@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+    		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+   		 <title>Show users</title>
+    		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	</head>
+
+	<body>
+		<div class="text-center">
+  			<h1>Show users</h1> 
+ 		</div>
+		<div class="container">
+			<form action="search" method="GET">
+   	 			<div class="form-group input-group mb-3">
+					<input type="text" class="form-control" id="searchWord" name="searchWord">
+					<button type="submit" class="btn btn-outline-dark">SEARCH</button>
+				</div>
+			</form>
+			<form action="add" method="GET">
+				<div class="form-group mb-3">
+					<button type="submit" class="btn btn-outline-dark">ADD NEW USER</button>
+          			</div>
+        		 </form>
+			<table class="table table-bordered">
+				<thead class="thead-dark">
+					<tr class="text-center">		
+						<th scope ="col">ID</th>
+						<th scope ="col">First Name</th>
+						<th scope ="col">Last Name</th>
+						<th scope ="col">Date of birth</th>
+						<th scope ="col">Salary</th>
+						<th scope ="col">Action</th>
+					</tr>
+            			</thead>
+				<tbody>
+					<#list users as user>
+						<tr class="text-center">		
+							<td>${user.id}</td>
+							<td>${user.firstName}</td>
+							<td>${user.lastName}</td>
+							<td>${user.dateOfBirth}</td>
+							<td>${user.salary}</td>
+							<td>
+								<div class="form-group input-group justify-content-around"> 
+									<form action="edit" method="GET">
+										<button type="submit" class="btn btn-outline-dark">EDIT</button>
+    										<input type="hidden" name="id" value="${user.id}">			
+									</form>
+									<form action="delete" method="post">
+    										<button type="submit" class="btn btn-outline-dark">DELETE</button>
+    										<input type="hidden" name="id" value="${user.id}">		
+									</form>
+								</div>	
+							</td>			
+						</tr>
+					</#list>
+				</tbody >
+        		</table >
+		</div>
+ 	</body>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+</html>
+

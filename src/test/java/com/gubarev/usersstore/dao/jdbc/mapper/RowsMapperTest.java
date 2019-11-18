@@ -1,14 +1,12 @@
 package com.gubarev.usersstore.dao.jdbc.mapper;
 
-
 import com.gubarev.usersstore.entity.User;
 import org.junit.Test;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -26,8 +24,8 @@ public class RowsMapperTest {
         when(mockResultSet.getString("first_name")).thenReturn("FirstName");
         when(mockResultSet.getString("last_name")).thenReturn("LastName");
         LocalDate date = LocalDate.of(2000, 12,31);
-        Timestamp sqlDate = Timestamp.valueOf(date.atTime(LocalTime.MIDNIGHT));
-        when(mockResultSet.getTimestamp("date_of_birth")).thenReturn(sqlDate);
+        Date sqlDate = Date.valueOf(date);
+        when(mockResultSet.getDate("date_of_birth")).thenReturn(sqlDate);
         when(mockResultSet.getDouble("salary")).thenReturn(20000.00);
 
         User actual = rowsMapper.userRowMapper(mockResultSet);

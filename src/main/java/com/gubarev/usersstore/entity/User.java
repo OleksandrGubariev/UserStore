@@ -9,8 +9,6 @@ public class User {
     private double salary;
     private LocalDate dateOfBirth;
 
-
-
     public long getId() {
         return id;
     }
