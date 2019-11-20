@@ -32,7 +32,7 @@ public class Starter {
         searchUsersServlet.setUsersService(userService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(getAllUsersServlet), "index");
+        context.addServlet(new ServletHolder(getAllUsersServlet), "/show");
         context.addServlet(new ServletHolder(insertUserServlet), "/add");
         context.addServlet(new ServletHolder(deleteUserServlet), "/delete");
         context.addServlet(new ServletHolder(editUserServlet), "/edit");
