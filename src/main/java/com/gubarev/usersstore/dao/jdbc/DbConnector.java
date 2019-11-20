@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.Properties;
 
 class DbConnector {
-    Connection createConnection() throws SQLException {
+    Connection createConnection() {
 //        String url;
 //        String user;
 //        String password;
@@ -34,9 +34,16 @@ class DbConnector {
 //        } catch (SQLException ex) {
 //            throw new ConnectDbException("Data base connection error. Check DB url, username and password.", ex);
 //        }
-        
+
+
+        Connection connection;
+        try {
             String dbUrl = System.getenv("JDBC_DATABASE_URL");
-            return DriverManager.getConnection(dbUrl);
+            connection = DriverManager.getConnection(dbUrl);
+        } catch (SQLException ex) {
+            throw new ConnectDbException("Data base connection error", ex);
+        }
+            return connection;
 
         //return connection;
     }
