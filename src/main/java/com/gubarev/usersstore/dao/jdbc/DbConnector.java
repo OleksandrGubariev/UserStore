@@ -8,33 +8,37 @@ import java.sql.*;
 import java.util.Properties;
 
 class DbConnector {
-    Connection createConnection() {
-        String url;
-        String user;
-        String password;
+    Connection createConnection() throws SQLException {
+//        String url;
+//        String user;
+//        String password;
+//
+//        Properties properties = new Properties();
+//
+//        try (InputStream inputStream =  getClass().getClassLoader().getResourceAsStream("config.properties")) {
+//            if(inputStream==null){
+//                throw new NullPointerException("Config file is not found");
+//            }
+//            properties.load(inputStream);
+//            url = properties.getProperty("url");
+//            user = properties.getProperty("user");
+//            password = properties.getProperty("password");
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException("Cannot read propertiesPath for connection", e);
+//        }
+//        Connection connection;
+//        try {
+//            System.out.println(String.format("Connect to DB with params: %s %s", url, user));
+//            connection = DriverManager.getConnection(url, user, password);
+//        } catch (SQLException ex) {
+//            throw new ConnectDbException("Data base connection error. Check DB url, username and password.", ex);
+//        }
+        
+            String dbUrl = System.getenv("JDBC_DATABASE_URL");
+            return DriverManager.getConnection(dbUrl);
 
-        Properties properties = new Properties();
-
-        try (InputStream inputStream =  getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if(inputStream==null){
-                throw new NullPointerException("Config file is not found");
-            }
-            properties.load(inputStream);
-            url = properties.getProperty("url");
-            user = properties.getProperty("user");
-            password = properties.getProperty("password");
-
-        } catch (IOException e) {
-            throw new RuntimeException("Cannot read propertiesPath for connection", e);
-        }
-        Connection connection;
-        try {
-            System.out.println(String.format("Connect to DB with params: %s %s", url, user));
-            connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException ex) {
-            throw new ConnectDbException("Data base connection error. Check DB url, username and password.", ex);
-        }
-        return connection;
+        //return connection;
     }
 }
 
