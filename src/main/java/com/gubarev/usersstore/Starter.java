@@ -19,7 +19,7 @@ public class Starter {
         GetAllUsersServlet getAllUsersServlet = new GetAllUsersServlet();
         getAllUsersServlet.setUsersService(userService);
 
-        InsertUserServlet insertUserServlet  = new InsertUserServlet();
+        InsertUserServlet insertUserServlet = new InsertUserServlet();
         insertUserServlet.setUsersService(userService);
 
         DeleteUserServlet deleteUserServlet = new DeleteUserServlet();
@@ -39,8 +39,10 @@ public class Starter {
         context.addServlet(new ServletHolder(searchUsersServlet), "/search");
 
         //start server
-        //Server server = new Server(Integer.parseInt(System.getenv("PORT")));
-        Server server = new Server(8080);
+        String serverPortEnv = System.getenv("PORT");
+        int serverPort = serverPortEnv != null ? Integer.parseInt(serverPortEnv) : 8080;
+
+        Server server = new Server(serverPort);
         server.setHandler(context);
         server.start();
 
