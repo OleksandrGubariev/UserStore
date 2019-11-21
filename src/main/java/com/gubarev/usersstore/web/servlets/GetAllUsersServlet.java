@@ -3,18 +3,14 @@ package com.gubarev.usersstore.web.servlets;
 import com.gubarev.usersstore.entity.User;
 import com.gubarev.usersstore.service.UserService;
 import com.gubarev.usersstore.web.templater.PageGenerator;
-import freemarker.cache.FileTemplateLoader;
-
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipInputStream;
 
 
 public class GetAllUsersServlet extends HttpServlet {
