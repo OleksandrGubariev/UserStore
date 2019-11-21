@@ -9,58 +9,70 @@
 	</head>
 
 	<body>
-		<div class="text-center">
-  			<h1>Show users</h1> 
- 		</div>
-		<div class="container">
-			<form action="search" method="GET">
-   	 			<div class="form-group input-group mb-3">
-					<input type="text" class="form-control" id="searchWord" name="searchWord">
-					<button type="submit" class="btn btn-outline-dark">SEARCH</button>
+		<nav class="navbar navbar-light mb-3" style="background-color: #e3f2fd;">
+			 <div class="container">
+  				<form action="search" method="GET" class="form-inline">
+    					<input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchWord" name="searchWord" aria-label="Search">
+    					<button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+  				</form>
+				<div class="btn-group" role="group" aria-label="Basic example">
+					<form action="show" method="GET" class="form-inline">
+						<button type="submit" class="btn btn-info my-2 my-sm-0 mr-1">Show users</button>
+        				</form>
+					<form action="add" method="GET" class="form-inline">
+						<button type="submit" class="btn btn-info my-2 my-sm-0">Add user</button>
+        			 	</form>
 				</div>
-			</form>
-			<form action="add" method="GET">
-				<div class="form-group mb-3">
-					<button type="submit" class="btn btn-outline-dark">ADD NEW USER</button>
-          			</div>
-        		 </form>
-			<table class="table table-bordered">
-				<thead class="thead-dark">
-					<tr class="text-center">		
-						<th scope ="col">ID</th>
-						<th scope ="col">First Name</th>
-						<th scope ="col">Last Name</th>
-						<th scope ="col">Date of birth</th>
-						<th scope ="col">Salary</th>
-						<th scope ="col">Action</th>
-					</tr>
-            			</thead>
-				<tbody>
-					<#list users as user>
+			</div>
+		</nav>
+
+		<main>
+			<div class="container pb-5">
+				<table class="table table-bordered">
+					<thead style="background-color: #e3f2fd;">
 						<tr class="text-center">		
-							<td>${user.id}</td>
-							<td>${user.firstName}</td>
-							<td>${user.lastName}</td>
-							<td>${user.dateOfBirth}</td>
-							<td>${user.salary}</td>
-							<td>
-								<div class="form-group input-group justify-content-around"> 
-									<form action="edit" method="GET">
-										<button type="submit" class="btn btn-outline-dark">EDIT</button>
-    										<input type="hidden" name="id" value="${user.id}">			
-									</form>
-									<form action="delete" method="post">
-    										<button type="submit" class="btn btn-outline-dark">DELETE</button>
-    										<input type="hidden" name="id" value="${user.id}">		
-									</form>
-								</div>	
-							</td>			
+							<th scope ="col">ID</th>
+							<th scope ="col">First Name</th>
+							<th scope ="col">Last Name</th>
+							<th scope ="col">Date of birth</th>
+							<th scope ="col">Salary</th>
+							<th scope ="col">Action</th>
 						</tr>
-					</#list>
-				</tbody >
-        		</table >
-		</div>
- 	</body>
+            				</thead>
+					<tbody>
+						<#list users as user>
+							<tr class="text-center">		
+								<td>${user.id}</td>
+								<td>${user.firstName}</td>
+								<td>${user.lastName}</td>
+								<td>${user.dateOfBirth}</td>
+								<td>${user.salary}</td>
+								<td>
+									<div class="form-group input-group justify-content-around"> 
+										<form action="edit" method="GET">
+											<button type="submit" class="btn btn btn-info my-2 my-sm-0">Edit</button>
+    											<input type="hidden" name="id" value="${user.id}">			
+										</form>
+										<form action="delete" method="post">
+    											<button type="submit" class="btn btn btn-info my-2 my-sm-0">Delete</button>
+    											<input type="hidden" name="id" value="${user.id}">		
+										</form>
+									</div>	
+								</td>			
+							</tr>
+						</#list>
+					</tbody >
+        			</table >
+			</div>
+ 		</main>
+ 		<footer class="footer fixed-bottom" style="background-color: #e3f2fd;">
+      			<div class="card-footer text-muted">
+        			<div class="container text-center" >  
+              				<h5><b>&copy;Oleksandr Gubariev</b></h5>  
+                  		</div>
+      			</div>
+    		</footer>
+	</body>
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

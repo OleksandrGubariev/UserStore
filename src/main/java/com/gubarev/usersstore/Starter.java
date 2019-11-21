@@ -39,7 +39,8 @@ public class Starter {
         context.addServlet(new ServletHolder(searchUsersServlet), "/search");
 
         //start server
-        Server server = new Server(Integer.parseInt(System.getenv("PORT")));
+        //Server server = new Server(Integer.parseInt(System.getenv("PORT")));
+        Server server = new Server(8080);
         server.setHandler(context);
         server.start();
 
