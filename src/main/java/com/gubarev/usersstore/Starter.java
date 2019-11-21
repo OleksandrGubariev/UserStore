@@ -39,7 +39,7 @@ public class Starter {
         context.addServlet(new ServletHolder(searchUsersServlet), "/search");
 
         //start server
-        Server server = new Server(8080);
+        Server server = new Server(0);
         server.setHandler(context);
         server.start();
 
