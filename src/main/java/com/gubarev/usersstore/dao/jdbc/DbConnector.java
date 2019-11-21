@@ -16,8 +16,8 @@ class DbConnector {
 
         Properties properties = new Properties();
 
-        try (InputStream inputStream =  getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if(inputStream==null){
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (inputStream == null) {
                 throw new NullPointerException("Config file is not found");
             }
             properties.load(inputStream);
@@ -33,13 +33,9 @@ class DbConnector {
             System.out.println(String.format("Connect to DB with params: %s %s", url, user));
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException ex) {
+            ex.printStackTrace();
             throw new ConnectDbException("Data base connection error. Check DB url, username and password.", ex);
         }
-
-
-
-
-
 
 
 //
