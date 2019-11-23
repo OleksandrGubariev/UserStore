@@ -1,22 +1,47 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Delete user</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
-
-<body>
-    <div class="container">
-        <p class = "text-center"> User delete successfully</p>
+	<head>
+    		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    		<title>Delete user</title>
+    		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	</head>
+	<body>
+		<nav class="navbar navbar-light mb-3" style="background-color: #e3f2fd;">
+			 <div class="container" >
+  				<form action="search" method="GET" class="form-inline">
+    					<input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchWord" name="searchWord" aria-label="Search">
+    					<button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+  				</form>
+				<div class="btn-group" role="group" aria-label="Basic example">
+					<form action="show" method="GET" class="form-inline">
+						<button type="submit" class="btn btn-info my-2 my-sm-0 mr-1">Show users</button>
+        			 	</form>
+					<form action="add" method="GET" class="form-inline">
+						<button type="submit" class="btn btn-info my-2 my-sm-0">Add user</button>
+        			 	</form>
+				</div>
+			 </div>
+		</nav>
+		<main>
+    			<div class="container">
+        			<p class = "text-center"> User delete successfully</p>
         
-    </div>
-    </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    			</div>
+		</main>
+		<footer class="footer fixed-bottom" style="background-color: #e3f2fd;">
+      			<div class="card-footer text-muted">
+        			<div class="container text-center"> 
+               				<h5><b>&copy;Oleksandr Gubariev</b></h5>
+             
+        			</div>
+      			</div>
+    		</footer>
+    	</body>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </html>
 

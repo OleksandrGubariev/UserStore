@@ -12,11 +12,11 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RowsMapperTest {
+public class UserRowMapperTest {
 
     @Test
     public void testUserRowMapper() throws SQLException {
-        RowsMapper rowsMapper = new RowsMapper();
+        UserRowMapper userRowMapper = new UserRowMapper();
 
         ResultSet mockResultSet = mock(ResultSet.class);
 
@@ -28,7 +28,7 @@ public class RowsMapperTest {
         when(mockResultSet.getDate("date_of_birth")).thenReturn(sqlDate);
         when(mockResultSet.getDouble("salary")).thenReturn(20000.00);
 
-        User actual = rowsMapper.userRowMapper(mockResultSet);
+        User actual = userRowMapper.mapRow(mockResultSet);
 
         assertNotNull(actual);
         assertEquals(1L, actual.getId());

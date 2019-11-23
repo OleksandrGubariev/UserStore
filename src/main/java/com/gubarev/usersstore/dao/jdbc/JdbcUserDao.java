@@ -1,6 +1,6 @@
 package com.gubarev.usersstore.dao.jdbc;
 
-import com.gubarev.usersstore.dao.jdbc.mapper.RowsMapper;
+import com.gubarev.usersstore.dao.jdbc.mapper.UserRowMapper;
 import com.gubarev.usersstore.entity.User;
 
 import java.sql.*;
@@ -15,10 +15,14 @@ public class JdbcUserDao {
     private static final String GET_USER_BY_ID = "SELECT id, first_name, last_name, date_of_birth, salary FROM Users WHERE id=?;";
     private static final String UPDATE_USER_BY_ID = "UPDATE Users SET first_name=?, last_name=?, date_of_birth=?, salary=? WHERE id=?;";
     private static final String SEARCH_USER = "SELECT id, first_name, last_name, date_of_birth, salary FROM Users WHERE LOWER(first_name) LIKE LOWER(?) OR LOWER(last_name) LIKE LOWER(?) ORDER BY id ASC;";
+    private Connection connection = new DbConnector().createConnection();
 
     public List<User> getAllUsers() {
-        PreparedStatement preparedStatement = getStatement(GET_ALL_USERS);
-        return getListUsers(preparedStatement);
+        try (PreparedStatement preparedStatement = getStatement(GET_ALL_USERS)) {
+            return getListUsers(preparedStatement);
+        } catch (SQLException e) {
+            throw new RuntimeException("Users is'nt founded", e);
+        }
     }
 
     public void insertUser(User user) {
@@ -26,7 +30,7 @@ public class JdbcUserDao {
             fillPreparedStatement(preparedStatement, user);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("User is'nt added", e);
         }
     }
 
@@ -35,24 +39,23 @@ public class JdbcUserDao {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("User is'nt deleted", e);
         }
     }
 
     public User getUserById(long id) {
-        PreparedStatement preparedStatement = getStatement(GET_USER_BY_ID);
-        User user = null;
-        try {
+        try (PreparedStatement preparedStatement = getStatement(GET_USER_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            RowsMapper rowsMapper = new RowsMapper();
-            while (resultSet.next()) {
-                user = rowsMapper.userRowMapper(resultSet);
+            UserRowMapper userRowMapper = new UserRowMapper();
+            if (!resultSet.next()) {
+                throw new IllegalArgumentException("User does'nt exist");
             }
+            return userRowMapper.mapRow(resultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("User is'nt founded", e);
         }
-        return user;
+
     }
 
     public void editUser(User user) {
@@ -61,31 +64,23 @@ public class JdbcUserDao {
             preparedStatement.setLong(5, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("User is'nt edited", e);
         }
     }
 
     public List<User> searchUser(String word) {
         String searchWord = "%" + word + "%";
-        PreparedStatement preparedStatement = getStatement(SEARCH_USER);
-        try {
+        try (PreparedStatement preparedStatement = getStatement(SEARCH_USER)) {
             preparedStatement.setString(1, searchWord);
             preparedStatement.setString(2, searchWord);
+            return getListUsers(preparedStatement);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("User is'nt founded", e);
         }
-        return getListUsers(preparedStatement);
     }
 
-    private PreparedStatement getStatement(String request) {
-        Connection connection = new DbConnector().createConnection();
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(request);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return preparedStatement;
+    private PreparedStatement getStatement(String request) throws SQLException {
+        return connection.prepareStatement(request);
     }
 
     private void fillPreparedStatement(PreparedStatement preparedStatement, User user) throws SQLException {
@@ -97,17 +92,15 @@ public class JdbcUserDao {
         preparedStatement.setDouble(4, user.getSalary());
     }
 
-    private List<User> getListUsers(PreparedStatement preparedStatement) {
+    private List<User> getListUsers(PreparedStatement preparedStatement) throws SQLException {
         List<User> users = new ArrayList<>();
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            RowsMapper rowsMapper = new RowsMapper();
+            UserRowMapper userRowMapper = new UserRowMapper();
             while (resultSet.next()) {
-                User user = rowsMapper.userRowMapper(resultSet);
+                User user = userRowMapper.mapRow(resultSet);
                 users.add(user);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return users;
         }
-        return users;
     }
 }
