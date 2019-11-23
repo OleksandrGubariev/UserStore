@@ -11,7 +11,6 @@ class DbConnector {
         } catch (SQLException ex) {
             throw new ConnectDbException("Data base connection error", ex);
         }
-
     }
 }
 
