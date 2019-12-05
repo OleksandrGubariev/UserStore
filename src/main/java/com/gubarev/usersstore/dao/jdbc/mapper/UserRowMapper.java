@@ -1,6 +1,6 @@
 package com.gubarev.usersstore.dao.jdbc.mapper;
 
-import com.gubarev.usersstore.entity.User;
+import com.gubarev.usersstore.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

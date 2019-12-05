@@ -1,36 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<head>
     		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-   		 <title>Show users</title>
+   		 	<title>Show users</title>
     		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	</head>
-
 	<body>
-		<nav class="navbar navbar-light mb-3" style="background-color: #e3f2fd;">
-			 <div class="container">
-  				<form action="search" method="GET" class="form-inline">
-    					<input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchWord" name="searchWord" aria-label="Search">
-    					<button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
-  				</form>
-				<div class="btn-group" role="group" aria-label="Basic example">
-					<form action="show" method="GET" class="form-inline">
-						<button type="submit" class="btn btn-info my-2 my-sm-0 mr-1">Show users</button>
-        				</form>
-					<form action="add" method="GET" class="form-inline">
-						<button type="submit" class="btn btn-info my-2 my-sm-0">Add user</button>
-        			 	</form>
-				</div>
-			</div>
-		</nav>
-
+		<#import "navbar.ftl" as navbar>
+		<@navbar.page></@navbar.page>
 		<main>
 			<div class="container pb-5">
 				<table class="table table-bordered">
 					<thead style="background-color: #e3f2fd;">
-						<tr class="text-center align-middle">		
+						<tr class="text-center align-middle">
 							<th scope ="col">ID</th>
 							<th scope ="col">First Name</th>
 							<th scope ="col">Last Name</th>
@@ -38,37 +20,34 @@
 							<th scope ="col">Salary</th>
 							<th scope ="col">Action</th>
 						</tr>
-            				</thead>
+          </thead>
 					<tbody>
 						<#list users as user>
-							<tr class="text-center">		
+							<tr class="text-center">
 								<td class = "align-middle">${user.id}</td>
 								<td class = "align-middle">${user.firstName}</td>
 								<td class = "align-middle">${user.lastName}</td>
 								<td class = "align-middle">${user.dateOfBirth}</td>
 								<td class = "align-middle">${user.salary}</td>
 								<td>
-									<div class="input-group justify-content-around "> 
+									<div class="input-group justify-content-around ">
 										<form action="edit" method="GET">
 											<button type="submit" class="btn btn btn-info my-2 my-sm-0">Edit</button>
-    											<input type="hidden" name="id" value="${user.id}">			
+    											<input type="hidden" name="id" value="${user.id}">
 										</form>
 										<form action="delete" method="post">
     											<button type="submit" class="btn btn btn-info my-2 my-sm-0">Delete</button>
-    											<input type="hidden" name="id" value="${user.id}">		
+    											<input type="hidden" name="id" value="${user.id}">
 										</form>
-									</div>	
-								</td>			
+									</div>
+								</td>
 							</tr>
 						</#list>
-					</tbody >
-        			</table >
+					</tbody>
+        </table>
 			</div>
  		</main>
 	</body>
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<#import "scripts.ftl" as scripts>
+	<@scripts.page></@scripts.page>
 </html>
-

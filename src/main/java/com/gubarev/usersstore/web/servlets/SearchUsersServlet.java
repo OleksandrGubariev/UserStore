@@ -1,7 +1,7 @@
 package com.gubarev.usersstore.web.servlets;
 
-import com.gubarev.usersstore.entity.User;
-import com.gubarev.usersstore.service.UserService;
+import com.gubarev.usersstore.entities.User;
+import com.gubarev.usersstore.services.UserService;
 import com.gubarev.usersstore.web.templater.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class SearchUsersServlet extends HttpServlet {
     private UserService usersService;
+    private PageGenerator pageGenerator = PageGenerator.instance();
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
@@ -22,7 +23,7 @@ public class SearchUsersServlet extends HttpServlet {
         List<User> users = usersService.searchUsers(searchWord);
         Map<String, Object> mapUsers = new HashMap<>();
         mapUsers.put("users", users);
-        response.getWriter().println(PageGenerator.instance().getPage("showAllUsers.html", mapUsers));
+        response.getWriter().println(pageGenerator.getPage("showAllUsers.html", mapUsers));
 
     }
 

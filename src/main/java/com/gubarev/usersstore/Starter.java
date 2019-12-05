@@ -1,19 +1,24 @@
 package com.gubarev.usersstore;
 
+import com.gubarev.usersstore.dao.jdbc.DbConnector;
 import com.gubarev.usersstore.dao.jdbc.JdbcUserDao;
-import com.gubarev.usersstore.service.UserService;
+import com.gubarev.usersstore.dao.jdbc.UserDao;
+import com.gubarev.usersstore.services.UserService;
 import com.gubarev.usersstore.web.servlets.*;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
+import javax.sql.DataSource;
+
 public class Starter {
     public static void main(String[] args) throws Exception {
-        JdbcUserDao jdbcUserDao = new JdbcUserDao();
+        DataSource dbConnector = new DbConnector();
+        UserDao jdbcUserDao = new JdbcUserDao(dbConnector);
 
         //config services
         UserService userService = new UserService();
-        userService.setJdbcUserDao(jdbcUserDao);
+        userService.setUserDao(jdbcUserDao);
 
         //config servlets
         GetAllUsersServlet getAllUsersServlet = new GetAllUsersServlet();

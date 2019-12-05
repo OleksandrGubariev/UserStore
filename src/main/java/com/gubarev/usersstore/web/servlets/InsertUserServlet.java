@@ -1,7 +1,7 @@
 package com.gubarev.usersstore.web.servlets;
 
-import com.gubarev.usersstore.entity.User;
-import com.gubarev.usersstore.service.UserService;
+import com.gubarev.usersstore.entities.User;
+import com.gubarev.usersstore.services.UserService;
 import com.gubarev.usersstore.web.templater.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
@@ -12,11 +12,12 @@ import java.time.LocalDate;
 
 public class InsertUserServlet extends HttpServlet {
     private UserService usersService;
+    private PageGenerator pageGenerator = PageGenerator.instance();
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
 
-        response.getWriter().println(PageGenerator.instance().getPage("add.html", null));
+        response.getWriter().println(pageGenerator.getPage("add.html"));
 
     }
 
@@ -34,7 +35,7 @@ public class InsertUserServlet extends HttpServlet {
 
         usersService.insertUser(user);
 
-        response.getWriter().println(PageGenerator.instance().getPage("insertSuccess.html", null));
+        response.getWriter().println(pageGenerator.getPage("insertSuccess.html", null));
     }
 
     public void setUsersService(UserService usersService){

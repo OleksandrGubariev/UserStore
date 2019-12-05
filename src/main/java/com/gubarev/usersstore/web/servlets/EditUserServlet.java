@@ -1,7 +1,7 @@
 package com.gubarev.usersstore.web.servlets;
 
-import com.gubarev.usersstore.entity.User;
-import com.gubarev.usersstore.service.UserService;
+import com.gubarev.usersstore.entities.User;
+import com.gubarev.usersstore.services.UserService;
 import com.gubarev.usersstore.web.templater.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class EditUserServlet extends HttpServlet {
     private UserService usersService;
+    private PageGenerator pageGenerator = PageGenerator.instance();
 
     public void doGet(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
@@ -21,7 +22,7 @@ public class EditUserServlet extends HttpServlet {
         User user = usersService.getUserById(userId);
         Map<String, Object> mapUsers = new HashMap<>();
         mapUsers.put("user", user);
-        response.getWriter().println(PageGenerator.instance().getPage("edit.html", mapUsers));
+        response.getWriter().println(pageGenerator.getPage("edit.html", mapUsers));
 
     }
 
@@ -39,7 +40,7 @@ public class EditUserServlet extends HttpServlet {
         user.setSalary(salary);
 
         usersService.editUser(user);
-        response.getWriter().println(PageGenerator.instance().getPage("editSuccess.html", null));
+        response.getWriter().println(pageGenerator.getPage("editSuccess.html", null));
     }
 
 

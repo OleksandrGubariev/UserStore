@@ -1,55 +1,40 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<head>
 		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-    		<title>Add user</title>
-    		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Add user</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	</head>
-
 	<body>
-		<nav class="navbar navbar-light mb-3" style="background-color: #e3f2fd;">
-			 <div class="container" >
-  				<form action="search" method="GET" class="form-inline">
-    					<input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchWord" name="searchWord" aria-label="Search">
-    					<button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
-  				</form>
-				<form action="show" method="GET" class="form-inline">
-					<button type="submit" class="btn btn-info my-2 my-sm-0">Show users</button>
-        			 </form>
-			 </div>
-		</nav>
+		<#import "navbar.ftl" as navbar>
+		<@navbar.page></@navbar.page>
 		<main>
 			<div class="text-center">
-  				<h1>Add user</h1> 
+  			<h1>Add user</h1>
  			</div>
 			<form action="add" method="POST">
 				<div class = "container">
-    					<div class="form-group">
-            					<label for="inputFirstlName">FIRST NAME</label>
-            					<input type="text" class="form-control" id="inputFirstName" name="firstName" required>
-          				</div>
-          				<div class="form-group">
-            					<label for="inputLastName">LAST NAME</label>
-            					<input type="text" class="form-control" id="inputLastName" name="lastName" required>
-          				</div>
-          				<div class="form-group">
-            					<label for="dateOfBirth">DATE OF BIRTH</label>
-	    					<input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
-          				</div>
-	  				<div class="form-group">
-            					<label for="salary">SALARY</label>
-	    					<input type="number" step="0.2" min="0" class="form-control" id="salary" name="salary" required>
-          				</div>
-          				<button type="submit" class="btn btn-info">Save</button>
+  				<div class="form-group">
+      			<label for="inputFirstName">FIRST NAME</label>
+      			<input type="text" class="form-control" id="inputFirstName" name="firstName" required>
+        	</div>
+        	<div class="form-group">
+        		<label for="inputLastName">LAST NAME</label>
+        		<input type="text" class="form-control" id="inputLastName" name="lastName" required>
+        	</div>
+        	<div class="form-group">
+        		<label for="dateOfBirth">DATE OF BIRTH</label>
+	   				<input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+        	</div>
+	 				<div class="form-group">
+          	<label for="salary">SALARY</label>
+	   				<input type="number" step="0.2" min="0" class="form-control" id="salary" name="salary" required>
+        	</div>
+        	<button type="submit" class="btn btn-info">Save</button>
 				</div>
 			</form>
 		</main>
-    	</body>
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  </body>
+	<#import "scripts.ftl" as scripts>
+	<@scripts.page></@scripts.page>
 </html>
-

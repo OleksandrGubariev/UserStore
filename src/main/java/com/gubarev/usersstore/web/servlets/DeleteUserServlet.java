@@ -1,6 +1,6 @@
 package com.gubarev.usersstore.web.servlets;
 
-import com.gubarev.usersstore.service.UserService;
+import com.gubarev.usersstore.services.UserService;
 import com.gubarev.usersstore.web.templater.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class DeleteUserServlet extends HttpServlet {
     private UserService usersService;
+    private PageGenerator pageGenerator = PageGenerator.instance();
 
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
@@ -18,7 +19,7 @@ public class DeleteUserServlet extends HttpServlet {
 
         usersService.deleteUser(userId);
 
-        response.getWriter().println(PageGenerator.instance().getPage("deleteSuccess.html", null));
+        response.getWriter().println(pageGenerator.getPage("deleteSuccess.html"));
     }
 
     public void setUsersService(UserService usersService){
