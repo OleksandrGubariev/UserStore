@@ -43,7 +43,7 @@ public class DbConnector implements DataSource {
         try {
             return source.getConnection();
         } catch (SQLException e) {
-            throw new RuntimeException("Data base connection error");
+            throw new RuntimeException("Data base connection error", e);
         }
     }
 
