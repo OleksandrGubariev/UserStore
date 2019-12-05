@@ -50,11 +50,6 @@
         <version>2.3.29</version>
     </dependency>
     <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-webapp</artifactId>
-        <version>9.4.22.v20191022</version>
-    </dependency>
-    <dependency>
         <groupId>postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>9.1-901-1.jdbc4</version>
