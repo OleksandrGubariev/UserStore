@@ -20,7 +20,11 @@ public class PropertyReader {
         }
         Properties properties = new Properties();
         properties.setProperty("SERVER_PORT", serverPortEnv);
-        properties.putAll(System.getProperties());
+        properties.setProperty("JDBC_SERVER", System.getenv("JDBC_SERVER"));
+        properties.setProperty("JDBC_PORT", System.getenv("JDBC_PORT"));
+        properties.setProperty("JDBC_DATABASE", System.getenv("JDBC_DATABASE"));
+        properties.setProperty("JDBC_LOGIN", System.getenv("JDBC_LOGIN"));
+        properties.setProperty("JDBC_PASSWORD", System.getenv("JDBC_PASSWORD"));
         return properties;
         }
 
