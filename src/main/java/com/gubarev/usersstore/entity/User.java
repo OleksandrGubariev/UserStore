@@ -1,4 +1,4 @@
-package com.gubarev.usersstore.entities;
+package com.gubarev.usersstore.entity;
 
 import java.time.LocalDate;
 

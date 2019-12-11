@@ -1,7 +1,8 @@
 package com.gubarev.usersstore.dao.jdbc;
 
+import com.gubarev.usersstore.dao.UserDao;
 import com.gubarev.usersstore.dao.jdbc.mapper.UserRowMapper;
-import com.gubarev.usersstore.entities.User;
+import com.gubarev.usersstore.entity.User;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -16,14 +17,15 @@ public class JdbcUserDao implements UserDao {
     private static final String GET_USER_BY_ID = "SELECT id, first_name, last_name, date_of_birth, salary FROM Users WHERE id=?;";
     private static final String UPDATE_USER_BY_ID = "UPDATE Users SET first_name=?, last_name=?, date_of_birth=?, salary=? WHERE id=?;";
     private static final String SEARCH_USER = "SELECT id, first_name, last_name, date_of_birth, salary FROM Users WHERE LOWER(first_name) LIKE LOWER(?) OR LOWER(last_name) LIKE LOWER(?) ORDER BY id ASC;";
-    private DataSource dbConnector;
+    private UserRowMapper userRowMapper = new UserRowMapper();
+    private DataSource dataSource;
 
-    public JdbcUserDao(DataSource dbConnector) {
-        this.dbConnector = dbConnector;
+    public JdbcUserDao(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public List<User> getAll() {
-        try (PreparedStatement preparedStatement = dbConnector.getConnection().prepareStatement(GET_ALL_USERS)) {
+        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(GET_ALL_USERS)) {
             return getListUsers(preparedStatement);
         } catch (SQLException e) {
             throw new RuntimeException("Users is'nt founded", e);
@@ -31,7 +33,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     public void insert(User user) {
-        try (PreparedStatement preparedStatement = dbConnector.getConnection().prepareStatement(INSERT_USER)) {
+        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(INSERT_USER)) {
             fillPreparedStatement(preparedStatement, user);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -40,7 +42,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     public void delete(long id) {
-        try (PreparedStatement preparedStatement = dbConnector.getConnection().prepareStatement(DELETE_USER)) {
+        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(DELETE_USER)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -49,10 +51,12 @@ public class JdbcUserDao implements UserDao {
     }
 
     public User getById(long id) {
-        try (PreparedStatement preparedStatement = dbConnector.getConnection().prepareStatement(GET_USER_BY_ID)) {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = dataSource.getConnection().prepareStatement(GET_USER_BY_ID);
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            UserRowMapper userRowMapper = new UserRowMapper();
+            resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 throw new IllegalArgumentException("User does'nt exist");
             }
@@ -60,11 +64,22 @@ public class JdbcUserDao implements UserDao {
         } catch (SQLException e) {
             throw new RuntimeException("User is'nt founded", e);
         }
-
+        finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void edit(User user) {
-        try (PreparedStatement preparedStatement = dbConnector.getConnection().prepareStatement(UPDATE_USER_BY_ID)) {
+        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(UPDATE_USER_BY_ID)) {
             fillPreparedStatement(preparedStatement, user);
             preparedStatement.setLong(5, user.getId());
             preparedStatement.executeUpdate();
@@ -75,7 +90,7 @@ public class JdbcUserDao implements UserDao {
 
     public List<User> search(String word) {
         String searchWord = "%" + word + "%";
-        try (PreparedStatement preparedStatement = dbConnector.getConnection().prepareStatement(SEARCH_USER)) {
+        try (PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(SEARCH_USER)) {
             preparedStatement.setString(1, searchWord);
             preparedStatement.setString(2, searchWord);
             return getListUsers(preparedStatement);
@@ -96,7 +111,6 @@ public class JdbcUserDao implements UserDao {
     private List<User> getListUsers(PreparedStatement preparedStatement) throws SQLException {
         List<User> users = new ArrayList<>();
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            UserRowMapper userRowMapper = new UserRowMapper();
             while (resultSet.next()) {
                 User user = userRowMapper.mapRow(resultSet);
                 users.add(user);

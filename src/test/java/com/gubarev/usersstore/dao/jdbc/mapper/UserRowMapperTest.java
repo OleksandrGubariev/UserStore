@@ -1,6 +1,6 @@
 package com.gubarev.usersstore.dao.jdbc.mapper;
 
-import com.gubarev.usersstore.entities.User;
+import com.gubarev.usersstore.entity.User;
 import org.junit.Test;
 
 import java.sql.Date;

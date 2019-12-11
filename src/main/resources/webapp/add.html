@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8"/>
-    <title>Add user</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<#import "head.html" as head>
+		<@head.page></@head.page>
+		<title>Add user</title>
 	</head>
 	<body>
-		<#import "navbar.ftl" as navbar>
+		<#import "navbar.html" as navbar>
 		<@navbar.page></@navbar.page>
 		<main>
 			<div class="text-center">
@@ -35,6 +35,6 @@
 			</form>
 		</main>
   </body>
-	<#import "scripts.ftl" as scripts>
+	<#import "scripts.html" as scripts>
 	<@scripts.page></@scripts.page>
 </html>

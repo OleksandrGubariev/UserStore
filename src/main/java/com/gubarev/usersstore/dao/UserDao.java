@@ -1,6 +1,6 @@
-package com.gubarev.usersstore.dao.jdbc;
+package com.gubarev.usersstore.dao;
 
-import com.gubarev.usersstore.entities.User;
+import com.gubarev.usersstore.entity.User;
 
 import java.util.List;
 

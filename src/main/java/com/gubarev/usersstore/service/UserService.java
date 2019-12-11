@@ -1,7 +1,7 @@
-package com.gubarev.usersstore.services;
+package com.gubarev.usersstore.service;
 
-import com.gubarev.usersstore.dao.jdbc.UserDao;
-import com.gubarev.usersstore.entities.User;
+import com.gubarev.usersstore.dao.UserDao;
+import com.gubarev.usersstore.entity.User;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class UserService {
         userDao.insert(user);
     }
 
-    public void deleteUser(long id){
+    public void deleteUserById(long id){
         userDao.delete(id);
     }
 

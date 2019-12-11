@@ -1,40 +1,47 @@
 package com.gubarev.usersstore;
 
-import com.gubarev.usersstore.dao.jdbc.DbConnector;
+import com.gubarev.usersstore.dao.jdbc.DataSourceFactory;
 import com.gubarev.usersstore.dao.jdbc.JdbcUserDao;
-import com.gubarev.usersstore.dao.jdbc.UserDao;
-import com.gubarev.usersstore.services.UserService;
-import com.gubarev.usersstore.web.servlets.*;
+import com.gubarev.usersstore.dao.UserDao;
+import com.gubarev.usersstore.service.UserService;
+import com.gubarev.usersstore.web.servlet.*;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 public class Starter {
     public static void main(String[] args) throws Exception {
-        DataSource dbConnector = new DbConnector();
-        UserDao jdbcUserDao = new JdbcUserDao(dbConnector);
+
+        PropertyReader propertyReader = new PropertyReader();
+        Properties properties = propertyReader.getProperties();
+
+        DataSourceFactory dataSourceFactory = new DataSourceFactory();
+        DataSource dataSource = dataSourceFactory.getDataSource(properties);
+
+        UserDao userDao = new JdbcUserDao(dataSource);
 
         //config services
         UserService userService = new UserService();
-        userService.setUserDao(jdbcUserDao);
+        userService.setUserDao(userDao);
 
         //config servlets
         GetAllUsersServlet getAllUsersServlet = new GetAllUsersServlet();
         getAllUsersServlet.setUsersService(userService);
 
         InsertUserServlet insertUserServlet = new InsertUserServlet();
-        insertUserServlet.setUsersService(userService);
+        insertUserServlet.setUserService(userService);
 
         DeleteUserServlet deleteUserServlet = new DeleteUserServlet();
-        deleteUserServlet.setUsersService(userService);
+        deleteUserServlet.setUserService(userService);
 
         EditUserServlet editUserServlet = new EditUserServlet();
-        editUserServlet.setUsersService(userService);
+        editUserServlet.setUserService(userService);
 
         SearchUsersServlet searchUsersServlet = new SearchUsersServlet();
-        searchUsersServlet.setUsersService(userService);
+        searchUsersServlet.setUserService(userService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(getAllUsersServlet), "/");
@@ -44,9 +51,7 @@ public class Starter {
         context.addServlet(new ServletHolder(searchUsersServlet), "/search");
 
         //start server
-        String serverPortEnv = System.getenv("PORT");
-        int serverPort = serverPortEnv != null ? Integer.parseInt(serverPortEnv) : 8080;
-
+        int serverPort = Integer.parseInt(properties.getProperty("SERVER_PORT"));
         Server server = new Server(serverPort);
         server.setHandler(context);
         server.start();
