@@ -15,13 +15,20 @@ public class PropertyReader {
 
     private Properties getProductionProperties() {
         String serverPortEnv = System.getenv("PORT");
+        String dbUri = System.getenv("DATABASE_URL");
+        String jdbcParameters = dbUri.substring(dbUri.indexOf("@")+1);
+        String jdbcDbServer = jdbcParameters.substring(0,jdbcParameters.indexOf(":"));
+        String jdbcDbPort = jdbcParameters.substring(1,jdbcParameters.indexOf("/"));
+        String jdbcDb = jdbcParameters.substring(1);
+
+
         Properties properties = new Properties();
         properties.setProperty("PORT", serverPortEnv);
-        properties.setProperty("JDBC_SERVER", System.getenv("JDBC_SERVER"));
-        properties.setProperty("JDBC_PORT", System.getenv("JDBC_PORT"));
-        properties.setProperty("JDBC_DATABASE", System.getenv("JDBC_DATABASE"));
-        properties.setProperty("JDBC_LOGIN", System.getenv("JDBC_LOGIN"));
-        properties.setProperty("JDBC_PASSWORD", System.getenv("JDBC_PASSWORD"));
+        properties.setProperty("JDBC_SERVER", jdbcDbServer);
+        properties.setProperty("JDBC_PORT", jdbcDbPort);
+        properties.setProperty("JDBC_DATABASE", jdbcDb);
+        properties.setProperty("JDBC_LOGIN", System.getenv("JDBC_DATABASE_USERNAME"));
+        properties.setProperty("JDBC_PASSWORD", System.getenv("JDBC_DATABASE_PASSWORD"));
         return properties;
     }
 

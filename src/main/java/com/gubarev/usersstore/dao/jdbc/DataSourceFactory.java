@@ -3,6 +3,7 @@ package com.gubarev.usersstore.dao.jdbc;
 import org.postgresql.ds.PGPoolingDataSource;
 
 import javax.sql.DataSource;
+import java.net.URI;
 import java.util.Properties;
 
 public class DataSourceFactory {
