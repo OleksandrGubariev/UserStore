@@ -2,6 +2,8 @@ package com.gubarev.usersstore;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class PropertyReader {
@@ -13,22 +15,27 @@ public class PropertyReader {
         return getDevProperties();
     }
 
-    public Properties getProductionProperties() {
+    private Properties getProductionProperties() {
         String serverPortEnv = System.getenv("PORT");
         String dbUri = System.getenv("DATABASE_URL");
-        String jdbcParameters = dbUri.substring(dbUri.indexOf("@") + 1);
-        String jdbcDbServer = jdbcParameters.substring(0, jdbcParameters.indexOf(":"));
-        String jdbcDbPort = jdbcParameters.substring(jdbcParameters.indexOf(":")+1, jdbcParameters.indexOf("/"));
-        String jdbcDb = jdbcParameters.substring(jdbcParameters.indexOf("/")+1);
-        
+        Map<String, String> mapDbProperty = parseUri(dbUri);
         Properties properties = new Properties();
         properties.setProperty("PORT", serverPortEnv);
-        properties.setProperty("JDBC_SERVER", jdbcDbServer);
-        properties.setProperty("JDBC_PORT", jdbcDbPort);
-        properties.setProperty("JDBC_DATABASE", jdbcDb);
+        properties.setProperty("JDBC_SERVER", mapDbProperty.get("JDBC_SERVER"));
+        properties.setProperty("JDBC_PORT", mapDbProperty.get("JDBC_PORT"));
+        properties.setProperty("JDBC_DATABASE", mapDbProperty.get("JDBC_DATABASE"));
         properties.setProperty("JDBC_LOGIN", System.getenv("JDBC_DATABASE_USERNAME"));
         properties.setProperty("JDBC_PASSWORD", System.getenv("JDBC_DATABASE_PASSWORD"));
         return properties;
+    }
+
+    public Map<String, String> parseUri(String dbUri){
+        String dbParameters = dbUri.substring(dbUri.indexOf("@") + 1);
+        Map<String, String> mapDbProperty = new HashMap<>();
+        mapDbProperty.put("JDBC_SERVER",dbParameters.substring(0, dbParameters.indexOf(":")));
+        mapDbProperty.put("JDBC_PORT", dbParameters.substring(dbParameters.indexOf(":")+1, dbParameters.indexOf("/")));
+        mapDbProperty.put("JDBC_DATABASE", dbParameters.substring(dbParameters.indexOf("/")+1));
+        return mapDbProperty;
     }
 
     private Properties getDevProperties() {
