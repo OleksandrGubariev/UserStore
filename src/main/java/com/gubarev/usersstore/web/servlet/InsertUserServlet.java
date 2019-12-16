@@ -33,7 +33,6 @@ public class InsertUserServlet extends HttpServlet {
 
         userService.insertUser(user);
         response.setContentType("text/html;charset=utf-8");
-        response.getWriter().println(pageGenerator.getPage("insertSuccess.html"));
         response.sendRedirect("showAllUsers.html");
     }
 
