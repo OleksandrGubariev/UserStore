@@ -104,7 +104,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     public List<User> search(String word) {
-        String searchWord = "%" + word + "%";
+        String searchWord = "'%" + word + "%'";
         String searchUser = SEARCH_USER.replace("?", searchWord);
         try (Statement statement = dataSource.getConnection().createStatement();
              ResultSet resultSet = statement.executeQuery(searchUser)) {

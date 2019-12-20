@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DeleteUserServlet extends HttpServlet {
-    private PageGenerator pageGenerator = PageGenerator.instance();
     private UserService userService;
 
     public void doPost(HttpServletRequest request,

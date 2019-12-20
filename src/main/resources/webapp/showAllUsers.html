@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<#import "head.html" as head>
-		<@head.page></@head.page>
+		<meta charset="UTF-8"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
    	<title>Show users</title>
 	</head>
 	<body>
-		<#import "navbar.html" as navbar>
-		<@navbar.page></@navbar.page>
+		<nav class="navbar navbar-light mb-3" style="background-color: #e3f2fd;">
+					 <div class="container">
+		  				<form action="search" method="GET" class="form-inline">
+		    					<input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchWord" name="searchWord" aria-label="Search">
+		    					<button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+		  				</form>
+						<div class="btn-group" role="group" aria-label="Basic example">
+							<form action="show" method="GET" class="form-inline">
+								<button type="submit" class="btn btn-info my-2 my-sm-0 mr-1">Show users</button>
+		        			 	</form>
+							<form action="add" method="GET" class="form-inline">
+								<button type="submit" class="btn btn-info my-2 my-sm-0">Add user</button>
+		        			 	</form>
+						</div>
+					 </div>
+				</nav>
 		<main>
 			<div class="container pb-5">
 				<table class="table table-bordered">
@@ -22,22 +36,22 @@
 						</tr>
           </thead>
 					<tbody>
-						<#list users as user>
+						<#list  users as  user>
 							<tr class="text-center">
-								<td class = "align-middle">${user.id}</td>
-								<td class = "align-middle">${user.firstName}</td>
-								<td class = "align-middle">${user.lastName}</td>
-								<td class = "align-middle">${user.dateOfBirth}</td>
-								<td class = "align-middle">${user.salary}</td>
+								<td class = "align-middle">${user.getId}</td>
+								<td class = "align-middle">${user.getFirstName}</td>
+								<td class = "align-middle">${user.getLastName}</td>
+								<td class = "align-middle">${user.getDateOfBirth}</td>
+								<td class = "align-middle">${user.getSalary}</td>
 								<td>
 									<div class="input-group justify-content-around ">
 										<form action="edit" method="GET">
 											<button type="submit" class="btn btn btn-info my-2 my-sm-0">Edit</button>
-    											<input type="hidden" name="id" value="${user.id}">
+    											<input type="hidden" name="id" value="${user.getId}">
 										</form>
 										<form action="delete" method="post">
     											<button type="submit" class="btn btn btn-info my-2 my-sm-0">Delete</button>
-    											<input type="hidden" name="id" value="${user.id}">
+    											<input type="hidden" name="id" value="${user.getId}">
 										</form>
 									</div>
 								</td>
@@ -48,6 +62,8 @@
 			</div>
  		</main>
 	</body>
-	<#import "scripts.html" as scripts>
-	<@scripts.page></@scripts.page>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </html>
